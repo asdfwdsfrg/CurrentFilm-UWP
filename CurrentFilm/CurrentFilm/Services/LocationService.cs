@@ -12,7 +12,7 @@ namespace CurrentFilm.Services
     {
         public static async Task<CoordinateString> GetLoction()
         {
-            string LocJson = await UriRequest.SendGetRequestAsync(ApiUri.ipLocationApiUri);
+            string LocJson = await HttpServices.SendGetRequestAsync(HttpServices.ipLocationApiUri);
             string Loc = JsonToObject.DataContract<Location>(LocJson).rectangle;
             char[] splitChars = { ',', ';' };
             string[] splitedLoc = Loc.Split(splitChars);
@@ -23,7 +23,7 @@ namespace CurrentFilm.Services
         }
         public static async Task<string> GetCity()
         {
-            string LocJson = await UriRequest.SendGetRequestAsync(ApiUri.ipLocationApiUri);
+            string LocJson = await HttpServices.SendGetRequestAsync(HttpServices.ipLocationApiUri);
             string LocCity = JsonToObject.DataContract<Location>(LocJson).city;
             int x = LocCity.LastIndexOf('市');
             return LocCity.Remove(x);

@@ -35,15 +35,15 @@ namespace CurrentFilm
             string subjectUrl = "https://api.douban.com/v2/movie/subject/";
             subjectUrl += parameters.id;
             string commentsUrl = subjectUrl + key;
-            string subjectStream = await UriRequest.SendGetRequestAsync(subjectUrl);
-            string commentSstream = await UriRequest.SendGetRequestAsync(commentsUrl);
+            string subjectStream = await HttpServices.SendGetRequestAsync(subjectUrl);
+            string commentSstream = await HttpServices.SendGetRequestAsync(commentsUrl);
             subjectData = JsonToObject.DataContract<Models.FilmDetails>(subjectStream);
             commentsData = JsonToObject.DataContract<Comments>(commentSstream);
             foreach(var a in commentsData.comments)
             {
                 commentsList.Add(a);
             }                      
-            //Summary.Text = "    " + subjectData.summary;                 
+            Summary.Text = "    " + subjectData.summary;                 
             foreach(var a in parameters.pubdates)
             {
                 Pubdate.Text += "/" + a;
@@ -62,11 +62,11 @@ namespace CurrentFilm
         {
             string pattern1 = "/movie/trailer.*[0-9]\"";
             string pattern2 = "http.*.mp4";
-            string temp = await UriRequest.SendGetRequestAsync(movieUrl);
+            string temp = await HttpServices.SendGetRequestAsync(movieUrl);
             string regular = RegexService.RegexAdapt(pattern1, temp);
             movieUrl = movieUrl.Remove(20);
             movieUrl += regular.Remove(regular.LastIndexOf("\""));
-            temp = await UriRequest.SendGetRequestAsync(movieUrl);
+            temp = await HttpServices.SendGetRequestAsync(movieUrl);
             regular = RegexService.RegexAdapt(pattern2, temp);
             return regular;
         }

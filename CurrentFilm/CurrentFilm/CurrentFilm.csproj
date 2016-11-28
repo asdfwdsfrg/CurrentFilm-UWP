@@ -98,9 +98,12 @@
     <Compile Include="ComingFilm.xaml.cs">
       <DependentUpon>ComingFilm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ComingFilmCollection.cs" />
+    <Compile Include="CommentsCollection.cs" />
     <Compile Include="FilmDetails.xaml.cs">
       <DependentUpon>FilmDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IncrementalLoading.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -115,7 +118,7 @@
     <Compile Include="RecentFilm.xaml.cs">
       <DependentUpon>RecentFilm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ApiUri.cs" />
+    <Compile Include="RecentFilmCollection.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\JsonToObject.cs" />
     <Compile Include="Models\Location.cs" />
