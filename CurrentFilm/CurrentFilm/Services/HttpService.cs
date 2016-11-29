@@ -26,7 +26,7 @@ namespace CurrentFilm.Services
             HttpResponseMessage responseMessage = await client.GetAsync(uri);
             return await responseMessage.Content.ReadAsStringAsync();
         }
-        public static async Task<Models.Film> GetRecentFilmAsync(int current, int need)
+        public static async Task<Models.Film> GetRecentFilmAsync(int _nextstart, int need)
         {
             Models.Film data = new Film();
             try
@@ -36,7 +36,7 @@ namespace CurrentFilm.Services
                 Dictionary<string, string> paramaters = new Dictionary<string, string>();
                // if (longAndLat != null && city != null)
                 {
-                    paramaters.Add("start", current.ToString());
+                    paramaters.Add("start", _nextstart.ToString());
                   //  paramaters.Add("city", city);
                     paramaters.Add("count", need.ToString());
                 }
@@ -50,7 +50,7 @@ namespace CurrentFilm.Services
             }
             return data;         
          }
-        public static async Task<Models.Film> GetComingFilmAsync(int current, int need)
+        public static async Task<Models.Film> GetComingFilmAsync(int _nextstart, int need)
         {
             Models.Film data = new Film();
             try
@@ -60,13 +60,31 @@ namespace CurrentFilm.Services
                 Dictionary<string, string> paramaters = new Dictionary<string, string>();
                 // if (longAndLat != null && city != null)
                 {
-                    paramaters.Add("start", current.ToString());
+                    paramaters.Add("start", _nextstart.ToString());
                     //  paramaters.Add("city", city);
                     paramaters.Add("count", need.ToString());
                 }
                 string uri = UriBuilder.BuildUri(doubanComingFilmApiUri, paramaters);
                 string x = await SendGetRequestAsync(uri);
                 data = Service.JsonToObject.DataContract<Models.Film>(x);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Can't get data");
+            }
+            return data;
+        }
+        public static async Task<Models.Comments> GetCommentsAsync(int _nextstart, int need, string url)
+        {
+            Models.Comments data = new Comments();
+            try
+            {
+                Dictionary<string, string> paramaters = new Dictionary<string, string>();
+                paramaters.Add("start", _nextstart.ToString());
+                paramaters.Add("count", need.ToString());
+                string commentsUrl = UriBuilder.BuildUri(url, paramaters);        
+                string x = await SendGetRequestAsync(commentsUrl);
+                data = Service.JsonToObject.DataContract<Models.Comments>(x);
             }
             catch
             {

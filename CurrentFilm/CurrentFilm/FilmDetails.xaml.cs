@@ -13,11 +13,10 @@ namespace CurrentFilm
     public sealed partial class FilmDetails : Page
     {
         private string movieSource = "";
-        private ObservableCollection<Comment> commentsList;
+        private CommentsCollection commentsList;
         Subject parameters { get; set; }
         private string key = "/comments?apikey=0b2bdeda43b5688921839c8ecb20399b";
         Models.FilmDetails subjectData { get; set; }
-        Models.Comments commentsData { get; set; }
         Models.Comment comment { get { return this.DataContext as Models.Comment; } }
         
 
@@ -30,19 +29,13 @@ namespace CurrentFilm
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            parameters = e.Parameter as Subject;
-            commentsList = new ObservableCollection<Comment>();
+            parameters = e.Parameter as Subject;          
             string subjectUrl = "https://api.douban.com/v2/movie/subject/";
             subjectUrl += parameters.id;
             string commentsUrl = subjectUrl + key;
+            commentsList = new CommentsCollection(commentsUrl);
             string subjectStream = await HttpServices.SendGetRequestAsync(subjectUrl);
-            string commentSstream = await HttpServices.SendGetRequestAsync(commentsUrl);
-            subjectData = JsonToObject.DataContract<Models.FilmDetails>(subjectStream);
-            commentsData = JsonToObject.DataContract<Comments>(commentSstream);
-            foreach(var a in commentsData.comments)
-            {
-                commentsList.Add(a);
-            }                      
+            subjectData = JsonToObject.DataContract<Models.FilmDetails>(subjectStream);             
             Summary.Text = "    " + subjectData.summary;                 
             foreach(var a in parameters.pubdates)
             {

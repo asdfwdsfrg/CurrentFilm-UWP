@@ -9,25 +9,24 @@
     xmlns:a ="using:CurrentFilm.Models"
     xmlns:controls ="using:Microsoft.Toolkit.Uwp"
     mc:Ignorable="d">
-    <ScrollViewer>
-        <Grid Background="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Image Width="200"
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Width="200"
                    Height="275"
                    HorizontalAlignment="Center"
                    Name="image"
                    Source="{x:Bind parameters.images.large}">
-                </Image>
-                <Button Grid.Column="0"
+            </Image>
+            <Button Grid.Column="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontFamily="Segoe MDL2 Assets"
@@ -35,89 +34,88 @@
                     FontSize="60"
                     Content="&#xE768;"
                     Click="Button_Click">
-                </Button>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Name="Header"
+            </Button>
+            <StackPanel Grid.Column="1">
+                <TextBlock Name="Header"
                            FontSize="20"
                            Margin="0,10,0,0"
                            Text="{x:Bind parameters.title }">
-                    </TextBlock>
-                    <TextBlock Name="Original_name"
+                </TextBlock>
+                <TextBlock Name="Original_name"
                            FontSize="20"
                            Margin="0,10,0,0"
                            Text="{x:Bind parameters.original_title }"
                            TextWrapping="Wrap">
-                    </TextBlock>
-                    <TextBlock Name="Duration"
+                </TextBlock>
+                <TextBlock Name="Duration"
                            FontSize="15"
                            Margin="0,10,0,0"
                            Text="{x:Bind parameters.durations[0]}"
                             TextWrapping="Wrap">
-                    </TextBlock>
-                    <TextBlock Name="Type"
+                </TextBlock>
+                <TextBlock Name="Type"
                            FontSize="15"
                            Margin="0,10,0,0"
                            Text="{x:Bind parameters.getGenres}"
                             TextWrapping="Wrap">
-                    </TextBlock>
-                    <TextBlock Name="Pubdate"
+                </TextBlock>
+                <TextBlock Name="Pubdate"
                            FontSize="15"
                            Margin="0,10,10,0"
                            TextWrapping="Wrap">
-                    </TextBlock>
-                </StackPanel>
-            </Grid>
-            <StackPanel Grid.Row="1">
-                <TextBlock Text="内容简介"
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+             <StackPanel Grid.Row="1">
+        <TextBlock Text="内容简介"
                            FontSize="23"
                            FontWeight="Black"
                            Margin="10">
-                </TextBlock>
-                <TextBlock Text="{x:Bind subjectData.summary}"
+        </TextBlock>
+        <TextBlock Text="{x:Bind subjectData.summary}"
                            TextWrapping="Wrap"
                            Name="Summary"
                            Margin="10">
-                </TextBlock>
-            </StackPanel>
-            <ListView Grid.Row="2" 
+        </TextBlock>
+        </StackPanel>
+        <ListView Grid.Row="2" 
                       ItemsSource="{x:Bind commentsList}">
-                <ListView.Header>
-                    <TextBlock Text="影评"
+            <ListView.Header>
+                <TextBlock Text="影评"
                            FontSize="23"
                            FontWeight="Black"
                            Margin="10">
-                    </TextBlock>
-                </ListView.Header>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="a:Comment">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{x:Bind author.avatar}"
+                </TextBlock>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="a:Comment">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{x:Bind author.avatar}"
                                        Height="30"
                                        Width="30"></Image>
-                                <StackPanel>
-                                    <TextBlock Text="{x:Bind author.name}"></TextBlock>
-                                    <TextBlock Text="{x:Bind created_at}"
+                            <StackPanel>
+                                <TextBlock Text="{x:Bind author.name}"></TextBlock>
+                                <TextBlock Text="{x:Bind created_at}"
                                                FontSize="10"
                                                Foreground="LightGray"></TextBlock>
-                                </StackPanel>
                             </StackPanel>
-                            <TextBlock Text="{x:Bind content}"
+                        </StackPanel>
+                        <TextBlock Text="{x:Bind content}"
                                        TextWrapping="Wrap"
                                        Margin="5"
                                        FontSize="15">
-                            </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <ProgressRing    Name="filmDetailsLoadingRing"
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ProgressRing    Name="filmDetailsLoadingRing"
                              HorizontalAlignment="Center "
                              VerticalAlignment="Center"
                              Height="60"
                                Width="60"
                               IsActive="True">
-            </ProgressRing>
-        </Grid>
-    </ScrollViewer>
+        </ProgressRing>
+    </Grid>
 </Page>

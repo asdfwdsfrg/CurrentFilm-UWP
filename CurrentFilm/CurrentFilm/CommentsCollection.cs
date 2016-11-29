@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
+using CurrentFilm.Models;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
@@ -10,34 +9,35 @@ namespace CurrentFilm
     class CommentsCollection : IncrementalLoadingColllection<Models.Comment>
     {      
             private int _total;
-            private int _current;
+            private int _nextstart;
+            private string url;
+            private Comments data;
             public delegate void LoadMoreStarted();
             public delegate void LoadMoreCompleted();
 
             public event LoadMoreStarted OnLoadMoreStarted;
             public event LoadMoreCompleted OnLoadMoreCompleted;
-            public CommentsCollection()
+            public CommentsCollection(string url)
             {
+                this.url = url; 
                 this.HasMoreItems = true;
-                _current = 0;
+                _nextstart = 0;
             }
             protected override async Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, int count)
             {
-                this.OnLoadMoreStarted();
-                Models.
-                count = 6;
-                data = await Services.HttpServices.GetRecentFilmAsync(_current, count);
+                data = new Comments();
+                count = 10;
+                data = await Services.HttpServices.GetCommentsAsync(_nextstart, count, url);
                 _total = data.total;
-                _current += count;
-                foreach (var a in data.subjects)
+                _nextstart = data.next_start;
+                foreach (var a in data.comments)
                 {
                     this.Add(a);
                 }
-                if (_current >= _total)
+                if (_nextstart >= _total)
                 {
                     HasMoreItems = false;
                 }
-                this.OnLoadMoreCompleted();
                 return new LoadMoreItemsResult { Count = (uint)this.Count };
             }
 
@@ -46,5 +46,4 @@ namespace CurrentFilm
                 throw new System.NotImplementedException();
             }
         }
-    }
 }
