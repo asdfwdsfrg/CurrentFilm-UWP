@@ -11,19 +11,19 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CurrentFilm
 {
-        public abstract class IncrementalLoadingColllection<T> : ObservableCollection<T>, ISupportIncrementalLoading
+    public abstract class IncrementalLoadingColllection<T> : ObservableCollection<T>, ISupportIncrementalLoading
+    {
+        public bool HasMoreItems
         {
-            public bool HasMoreItems
-            {
-                  get;set;
-            }
-
-            public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
-            {
-                return AsyncInfo.Run((c) => LoadMoreItemsAsync(c, (int)count));
-            }
-
-             protected abstract Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, int count);
-          protected bool _busy = false;
+            get; set;
         }
+
+        public IAsyncOperation<LoadMoreItemsResult> LoadMoreItemsAsync(uint count)
+        {
+            return AsyncInfo.Run((c) => LoadMoreItemsAsync(c, (int)count));
+        }
+
+        protected abstract Task<LoadMoreItemsResult> LoadMoreItemsAsync(CancellationToken c, int count);
+        protected bool _busy = false;
+    }
 }

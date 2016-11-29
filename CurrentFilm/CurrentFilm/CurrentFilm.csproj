@@ -111,6 +111,7 @@
     <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\FilmDetails.cs" />
     <Compile Include="Models\RecentFilm.cs" />
+    <Compile Include="Models\Reviews.cs" />
     <Compile Include="Movie.xaml.cs">
       <DependentUpon>Movie.xaml</DependentUpon>
     </Compile>
@@ -119,6 +120,10 @@
       <DependentUpon>RecentFilm.xaml</DependentUpon>
     </Compile>
     <Compile Include="RecentFilmCollection.cs" />
+    <Compile Include="Reviews.xaml.cs">
+      <DependentUpon>Reviews.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReviewsCollection.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\JsonToObject.cs" />
     <Compile Include="Models\Location.cs" />
@@ -170,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RecentFilm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reviews.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

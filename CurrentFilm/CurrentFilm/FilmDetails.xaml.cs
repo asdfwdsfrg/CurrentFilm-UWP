@@ -14,8 +14,9 @@ namespace CurrentFilm
     {
         private string movieSource = "";
         private CommentsCollection commentsList;
+        private ReviewsCollection reviewsList;
         Subject parameters { get; set; }
-        private string key = "/comments?apikey=0b2bdeda43b5688921839c8ecb20399b";
+        private string key = "apikey=0b2bdeda43b5688921839c8ecb20399b";
         Models.FilmDetails subjectData { get; set; }
         Models.Comment comment { get { return this.DataContext as Models.Comment; } }
         
@@ -32,7 +33,9 @@ namespace CurrentFilm
             parameters = e.Parameter as Subject;          
             string subjectUrl = "https://api.douban.com/v2/movie/subject/";
             subjectUrl += parameters.id;
-            string commentsUrl = subjectUrl + key;
+            string commentsUrl = subjectUrl + "/comments?" + key;
+            string reviewsUrl = subjectUrl + "/reviews?" + key;
+            reviewsList = new ReviewsCollection(reviewsUrl);
             commentsList = new CommentsCollection(commentsUrl);
             string subjectStream = await HttpServices.SendGetRequestAsync(subjectUrl);
             subjectData = JsonToObject.DataContract<Models.FilmDetails>(subjectStream);             
@@ -62,6 +65,11 @@ namespace CurrentFilm
             temp = await HttpServices.SendGetRequestAsync(movieUrl);
             regular = RegexService.RegexAdapt(pattern2, temp);
             return regular;
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            this.Frame.Navigate(typeof(Reviews), e.ClickedItem);
         }
     }
 }
